@@ -34,8 +34,12 @@ def draw():
 
 def update():
     global rl_is_the_hacker
-    if keyboard.s:
+    if keyboard.w:
         rl_is_the_hacker = True
+
+    global start_time
+    if keyboard.s:
+        start_time = time()
 
 
 def on_mouse_down(pos):
