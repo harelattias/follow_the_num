@@ -6,6 +6,11 @@ from time import time
 WIDTH = 700
 HEIGHT = 700
 
+game_over = False
+game_time = 999
+
+number_of_dots = 10
+
 dots = []
 lines = []
 start_time = 0
@@ -14,7 +19,7 @@ rl_is_the_hacker = False
 
 next_dot = 0
 
-for dot in range(0, 10):
+for dot in range(0, number_of_dots):
     actor = Actor("dot")
     actor.pos = randint(70, (WIDTH - 70)), \
                 randint(70, (HEIGHT - 70))
@@ -30,6 +35,12 @@ def draw():
         number = number + 1
     for line in lines:
         screen.draw.line(line[0], line[1], (200, 200, 200))
+
+    global game_time
+
+    if game_over:
+        screen.fill("pink")
+        screen.draw.text("total:" " " + str(int(game_time)) + " " "seconds", topleft=(HEIGHT / 3.3, WIDTH / 2.2), fontsize=60)
 
 
 def update():
@@ -48,6 +59,9 @@ def on_mouse_down(pos):
     global start_time
     global end_time
     global rl_is_the_hacker
+    global game_over
+    global game_time
+    global number_of_dots
 
     if next_dot == 0:
         start_time = time()
@@ -60,8 +74,9 @@ def on_mouse_down(pos):
         lines = []
         next_dot = 0
 
-    if next_dot == 10:
+    if next_dot == number_of_dots:
         end_time = time()
+        game_over = True
 
         if rl_is_the_hacker == False:
             game_time = end_time - start_time
